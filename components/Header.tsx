@@ -5,7 +5,7 @@ import { ToggleTheme } from "./ToggleTheme";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { ChevronDown, LayoutDashboard, StarsIcon } from "lucide-react";
+import { ChevronDown, FileText, GraduationCap, LayoutDashboard, PenBoxIcon, StarsIcon } from "lucide-react";
 
 import {
     DropdownMenu,
@@ -38,11 +38,12 @@ export default function Header(){
                 <div className="flex items-center space-x-2 md:space-x-4 ml-auto"> 
                     <SignedIn>
                         <Link href={'/dashboard'}>
-                            <Button className="flex items-center gap-2">
+                            <Button className="flex items-center gap-2" variant="outline">
                                 <LayoutDashboard className="h-4 w-4"/> 
                                 <span className="hidden md:block">Industry Insights</span>
                             </Button>
                         </Link>
+                    
                         <DropdownMenu>
       <DropdownMenuTrigger asChild>
             <Button className="flex items-center gap-2">
@@ -55,32 +56,45 @@ export default function Header(){
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            Profile
-        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          <Link href={"/resume-builder"} className="flex items-center gap-2">  
+                <FileText className="h-4 w-4"/>
+                <span>Resume Builder</span> 
+          </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+          <Link href={"/cover-letter"} className="flex items-center gap-2">  
+                <PenBoxIcon className="h-4 w-4"/>
+                <span>Cover Letter</span> 
+          </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+          <Link href={"/interview-prep"} className="flex items-center gap-2">  
+                <GraduationCap className="h-4 w-4"/>
+                <span>Interview Prep</span> 
+          </Link>
+
           </DropdownMenuItem>
         </DropdownMenuGroup>
         </DropdownMenuContent>
-    </DropdownMenu>
-                    </SignedIn>
-                    <div className="flex items-center gap-4"> 
-                        <SignedIn>
-                            <UserButton />
-                        </SignedIn> 
-                        <ToggleTheme/> 
-                    </div>
-                
+    </DropdownMenu> 
+    </SignedIn>
+    <SignedOut>
+        <SignInButton>
+            <Button variant="outline">
+                Sign In
+            </Button>
+        </SignInButton>
+    </SignedOut>
+    <SignedIn>
+        <UserButton appearance={{elements:
+            {
+                avatarBox:"w-10 h-10", 
+                userButtonPopoverCard: "shadow-xl", 
+                userPreviewMainIdentifier: "font-semibold",
+            }
+            }} afterSignOutUrl="/" />
+    </SignedIn> 
+    <ToggleTheme/> 
     
                 </div>
             </nav>
