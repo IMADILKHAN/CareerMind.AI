@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonial";
 import { ToggleTheme } from "@/components/ToggleTheme";
+import Faqs from "@/components/faqs";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { features } from "@/data/features";
@@ -17,7 +18,7 @@ export default function Home() {
       <FeatureSection/>
       <HowItWorks/>
       <Testimonials/>
-
+      <Faqs/>
     </>
       
   );
