@@ -1,12 +1,11 @@
-"use client"
-import { useTheme } from "next-themes"
+
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ToggleTheme } from "./ToggleTheme";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ChevronDown, FileText, GraduationCap, LayoutDashboard, PenBoxIcon, StarsIcon } from "lucide-react";
-
+import {checkUser} from "../lib/checkUser";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -21,17 +20,16 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import ThemeAwareLogo from "./ThemeAwareLogo";
 
-export default function Header(){
-    const { theme, setTheme } = useTheme()
-    const logoSrc = theme === 'light' ? '/logo_light.png' : '/logo.png';
+export default async function Header(){
+    await checkUser()
 
     return(
         <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
             <nav className="container px-4 h-16 w-full flex items-center">
                 <Link href="/">
-                    <Image src={logoSrc} alt="CareerMind.AI" width={180} height={40} 
-                        className="h-auto w-auto object-contain py-2 pr-4"/> 
+                    <ThemeAwareLogo/>
                 </Link>
             
 

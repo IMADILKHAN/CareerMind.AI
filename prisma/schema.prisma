@@ -5,11 +5,112 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  // 1. FIXED: provider is "prisma-client-js"
+  provider = "prisma-client-js" 
   output   = "../lib/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url =  env("DATABASE_URL")
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  Id          String @id @default(uuid())
+  clerkUserId String @unique
+  email       String @unique
+  name        String
+  imageUrl    String?
+  industry    String?
+
+  industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  bio         String?
+  experience  Float?
+  skills      String[]
+  assessments Assessments[]
+  resume      Resume?
+  coverLetter CoverLetter[]
+}
+
+model IndustryInsight {
+  Id       String @id @default(uuid())
+  industry String @unique // The indusrty this data belongs to (eg.. "tech-software-development")
+  user     User[]
+
+  // 4. FIXED: Json[] -> Json
+  salaryRanges Json[]
+
+  // Industry Trends
+  growthRate Float //Industry growth Rate
+  demandLevel DemandLevel //"High","Medium","Low" 
+  topSkills   String[] //Most in-demand Skills
+
+  // Market Conditions
+  marketOutlook MarketOutlook //  POSITIVE, NEUTRAL ,NEGATIVE  
+  keyTrends     String[]
+
+  //Learning Suggestions 
+  recommendedSkills String[] //Skills recommended for the industry 
+
+  lastUpdated DateTime @default(now())
+  nextUpdate  DateTime //Scheduled update time
+}
+
+model CoverLetter {
+  Id      String @id @default(uuid())
+  userId  String
+  // 5. FIXED: Added onDelete: Cascade
+  user    User   @relation(fields: [userId], references: [Id], onDelete: Cascade)
+  content String
+  jobDescription String
+  companyName    String
+  jobTitle       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Resume {
+  Id      String   @id @default(uuid())
+  // 6. FIXED: Added @unique for 1:1 relation
+  userId  String   @unique
+  // 5. FIXED: Added onDelete: Cascade
+  user    User     @relation(fields: [userId], references: [Id], onDelete: Cascade)
+  content String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Assessments {
+  Id     String @id @default(uuid())
+  userId String
+  // 5. FIXED: Added onDelete: Cascade
+  user   User   @relation(fields: [userId], references: [Id], onDelete: Cascade)
+
+  quizScore Float
+  // 4. FIXED: Json[] -> Json
+  questions Json // [{question,answer,userAnswer,isCorrect},...]
+
+  category       String
+  improvementTip String? // Ai-generated
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+}
+
+enum DemandLevel {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum MarketOutlook {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
 }

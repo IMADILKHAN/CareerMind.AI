@@ -1,14 +1,13 @@
 import FeatureSection from "@/components/FeatureSection";
+import Footer from "@/components/footer";
 import GridBackground from "@/components/GridBackground";
 import HeroSection from "@/components/HeroSection";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonial";
-import { ToggleTheme } from "@/components/ToggleTheme";
 import Faqs from "@/components/faqs";
-import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { features } from "@/data/features";
-import Image from "next/image";
+import FooterLanding from "@/components/footer";
+
+
 
 export default function Home() {
   return (
@@ -19,6 +18,7 @@ export default function Home() {
       <HowItWorks/>
       <Testimonials/>
       <Faqs/>
+      <FooterLanding/>
     </>
       
   );
