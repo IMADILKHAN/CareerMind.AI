@@ -1,3 +1,4 @@
+export const revalidate = 0; 
 import { industries } from "@/data/industries";
 import { Main } from "next/document";
 import {getUserOnBoardingStatus} from "@/actions/user";
